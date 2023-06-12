@@ -13,12 +13,12 @@ plugins {
 
 group = properties("pluginGroup").get()
 
-version = "6.3.0-IJ2023.2"
+version = "6.2.2-IJ2022.2-my"
 
 tasks {
     patchPluginXml {
         // https://plugins.jetbrains.com/docs/intellij/build-number-ranges.html
-        sinceBuild.set("232.6734.9")
+        sinceBuild.set("222.4167.9")
         untilBuild.set("")
         changeNotes.set(
             """
@@ -33,7 +33,8 @@ tasks {
 intellij {
     pluginName = properties("pluginName")
     //https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html#configuration-intellij-extension
-    version = "LATEST-EAP-SNAPSHOT"
+//    version = "LATEST-EAP-SNAPSHOT"
+    version = "2022.2.5"
     type = "IC"
 
     // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file.

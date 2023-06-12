@@ -35,47 +35,51 @@ public class LinkNavigator {
     private int lastIndex = 0;
     private LocalFileSystem localFileSystem;
     private FileEditorManager fileEditorManager;
+    private Project project;
 
     public LinkNavigator(RenderRequest renderRequest, RenderResult renderResult, Project project) {
         this.renderRequest = renderRequest;
         this.renderResult = renderResult;
         localFileSystem = LocalFileSystem.getInstance();
         fileEditorManager = FileEditorManager.getInstance(project);
+        this.project = project;
     }
 
     public void findNextSourceAndNavigate(String text) {
-        boolean continuing = continuing(text);
-        if (!continuing) {
-            reset();
-        }
-
-        if (continuing) {
-            if (renderResult.includedFilesContains(lastFile)) {
-                if (navigateToIncludedFile(text)) {
-                    return;
-                }
-            } else {
-                if (navigateToEditor(text, renderRequest.getSourceFile())) {
-                    return;
-                }
-                reset();
-                if (navigateToIncludedFile(text)) {
-                    return;
-                }
-            }
-        }
-
+        navigateToIncludedFile(text);
         reset();
-
-        if (navigateToEditor(text, renderRequest.getSourceFile())) {
-            return;
-        }
-
-        if (navigateToIncludedFile(text)) {
-            return;
-        }
-
-        reset();
+//        boolean continuing = continuing(text);
+//        if (!continuing) {
+//            reset();
+//        }
+//
+//        if (continuing) {
+//            if (renderResult.includedFilesContains(lastFile)) {
+//                if (navigateToIncludedFile(text)) {
+//                    return;
+//                }
+//            } else {
+//                if (navigateToEditor(text, renderRequest.getSourceFile())) {
+//                    return;
+//                }
+//                reset();
+//                if (navigateToIncludedFile(text)) {
+//                    return;
+//                }
+//            }
+//        }
+//
+//        reset();
+//
+//        if (navigateToEditor(text, renderRequest.getSourceFile())) {
+//            return;
+//        }
+//
+//        if (navigateToIncludedFile(text)) {
+//            return;
+//        }
+//
+//        reset();
     }
 
     private boolean continuing(String text) {
@@ -92,6 +96,8 @@ public class LinkNavigator {
     }
 
     private boolean navigateToIncludedFile(String text) {
+        System.out.println("ok4");
+
         Map<File, Long> includedFiles = renderResult.getIncludedFiles();
         ArrayList<File> files = new ArrayList<>(includedFiles.keySet());
         int from = 0;
